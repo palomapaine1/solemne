@@ -24,8 +24,7 @@ def obtener_datos_api(api_url):
     # Llamar la función para obtener los datos
     api_url="https://restcountries.com/v3.1/all"
     df = obtener_datos_api(api_url)
-    # Si hay datos, mostrar el DataFrame, mostrar dataframe con las columnas
-    seleccionadas, permitir filtrado y mostrar gráficos.
+    # Si hay datos, mostrar el DataFrame, mostrar dataframe con las columnas seleccionadas, permitir filtrado y mostrar gráficos.
     if df is not None:
         # Mostrar las primeras 5 filas del dataframe
         st.write(df.head())
