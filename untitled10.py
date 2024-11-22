@@ -72,16 +72,7 @@ if df is not None:
     # Calcular las estadísticas (media y mediana) solo para columnas numéricas
     numerical_cols = df_seleccionado.select_dtypes(include=['number']).columns
     
-    if len(numerical_cols) > 0:
-        # Media
-        st.write("Media de las columnas seleccionadas:")
-        st.write(df_seleccionado[numerical_cols].mean())
-    
-        # Mediana
-        st.write("Mediana de las columnas seleccionadas:")
-        st.write(df_seleccionado[numerical_cols].median())
-    else:
-        st.write("No hay columnas numéricas seleccionadas.")
+
 
 
         
