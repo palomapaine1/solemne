@@ -61,7 +61,6 @@ if df is not None:
         df_ordenado = df_seleccionado.sort_values(by=columna_ordenar, ascending=True)
     else:
         df_ordenado = df_seleccionado.sort_values(by=columna_ordenar, ascending=False)
-    
     # Mostrar el DataFrame ordenado
     st.write('DataFrame Ordenado:')
     st.write(df_ordenado)
