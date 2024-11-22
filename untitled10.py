@@ -45,3 +45,7 @@ if df is not None:
     # Mostrar el DataFrame con las columnas seleccionadas
     st.write('Columna Selecionada:')
     st.write(df_seleccionado)
+    st.write("Estadísticas de las columnas seleccionadas:")
+    st.write("Media:",)
+    st.write("Mediana:",)
+    st.write("Desviación estándar:",)
