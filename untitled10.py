@@ -49,3 +49,4 @@ if df is not None:
     st.write("Media:",)
     st.write("Mediana:",)
     st.write("Desviación estándar:",)
+    st.dataframe(df_cleaned)
