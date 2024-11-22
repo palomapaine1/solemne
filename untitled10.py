@@ -35,7 +35,7 @@ if df is not None:
 
     # Mostrar DataFrame con las columnas seleccionadas
     st.title("Interacción con los datos")
-    st.write("Mostrar los datos originales")
+    st.header("Mostrar los datos originales")
     st.dataframe(df_cleaned)
 
     # Filtrado interactivo por población mínima
