@@ -18,7 +18,7 @@ def obtener_datos_paises(api_url):
 api_url = "https://restcountries.com/v3.1/all"
 
 # Obtener los datos de la API
-data = obtener_datos_paises(api_url)
+df = obtener_datos_paises(api_url)
 
 # Procesar los datos si la respuesta es exitosa
 if df is not None:
