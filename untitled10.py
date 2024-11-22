@@ -68,8 +68,8 @@ if df is not None:
      # Mostrar el DataFrame original
     st.write("DataFrame Original:")
     st.write(df_cleaned)
-    # Elegir la columna numérica para filtrar (en este caso 'population')
-    columna_filtro = 'population'  # Puedes cambiar esto por cualquier columna numérica de tu DataFrame
+    # Elegir la columna numérica para filtrar (en este caso 'poblacion')
+    columna_filtro = 'poblacion' 
     # Usar un slider para seleccionar el rango de valores para filtrar
     min_valor, max_valor = st.slider(
         f"Selecciona el rango de valores para la columna '{columna_filtro}':",
