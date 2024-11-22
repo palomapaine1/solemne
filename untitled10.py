@@ -64,28 +64,7 @@ if df is not None:
     # Mostrar el DataFrame ordenado
     st.write('DataFrame Ordenado:')
     st.write(df_ordenado)
-    st.header("Filtrar filas según valores en una columna numérica")
 
-# Mostrar el DataFrame original
-st.write("DataFrame Original:")
-st.write(df_cleaned)
-
-# Elegir la columna numérica para filtrar (en este caso 'poblacion')
-columna_filtro = 'poblacion'  # Puedes cambiar esto por cualquier columna numérica de tu DataFrame
-
-# Usar un slider para seleccionar el rango de valores para filtrar
-min_valor, max_valor = st.slider(
-    f"Selecciona el rango de valores para la columna '{columna_filtro}':",
-    min_value=int(df_cleaned[columna_filtro].min()), 
-    max_value=int(df_cleaned[columna_filtro].max()),
-    value=(int(df_cleaned[columna_filtro].min()), int(df_cleaned[columna_filtro].max())))
-
-# Filtrar el DataFrame según el rango seleccionado
-df_filtrado = df_cleaned[(df_cleaned[columna_filtro] >= min_valor) & (df_cleaned[columna_filtro] <= max_valor)]
-
-# Mostrar el DataFrame filtrado
-st.write(f"DataFrame Filtrado por '{columna_filtro}' en el rango {min_valor} - {max_valor}:")
-st.write(df_filtrado)
         
 
 
