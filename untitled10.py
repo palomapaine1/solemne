@@ -29,12 +29,12 @@ if df is not None:
     df['Idiomas Oficiales'] = df['languages'].apply(lambda x: len(x) if isinstance(x, dict) else 0)
     df['Zonas Horarias'] = df['timezones'].apply(lambda x: len(x) if isinstance(x, list) else 0)
 
-    # Filtrar columnas seleccionadas
+    # Dato para trabajar
     columnas = ['Nombre', 'Región', 'Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias']
     df_cleaned = df[columnas]
 
     # Mostrar DataFrame con las columnas seleccionadas
-    st.write("Datos Filtrados:")
+    st.write("Mostrar los datos originales")
     st.dataframe(df_cleaned)
 
     # Filtrado interactivo por población mínima
