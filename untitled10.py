@@ -64,17 +64,22 @@ if df is not None:
     # Mostrar el DataFrame ordenado
     st.write('DataFrame Ordenado:')
     st.write(df_ordenado)
-    st.header("Filtrar columnas según valores en una columna numérica")
-    columnas = st.multiselect('Selecciona las columnas a visualizar', df_cleaned.columns.tolist(), default=df_cleaned.columns.tolist())
-    df_seleccionado = df_cleaned[columnas]
-    #filtrar las filas en función de valores en una columna numérica
-    columna_filtro = 'poblacion'
-    min_valor, max_valor = st.slider(
-    f"Selecciona el rango de valores para la columna '{columna_filtro}':",
-    min_value=int(df_cleaned[columna_filtro].min()), 
-    max_value=int(df_cleaned[columna_filtro].max()),
-    value=(int(df_cleaned[columna_filtro].min()), int(df_cleaned[columna_filtro].max())))
+    st.header("Filtrar filas según valores en una columna numérica")
 
+    # Mostrar el DataFrame original
+    st.write("DataFrame Original:")
+    st.write(df_cleaned)
+    
+    # Elegir la columna numérica para filtrar (en este caso 'population')
+    columna_filtro = 'population'  # Puedes cambiar esto por cualquier columna numérica de tu DataFrame
+    
+    # Usar un slider para seleccionar el rango de valores para filtrar
+    min_valor, max_valor = st.slider(
+        f"Selecciona el rango de valores para la columna '{columna_filtro}':",
+        min_value=int(df_cleaned[columna_filtro].min()), 
+        max_value=int(df_cleaned[columna_filtro].max()),
+        value=(int(df_cleaned[columna_filtro].min()), int(df_cleaned[columna_filtro].max())))
+    
     # Filtrar el DataFrame según el rango seleccionado
     df_filtrado = df_cleaned[(df_cleaned[columna_filtro] >= min_valor) & (df_cleaned[columna_filtro] <= max_valor)]
     
