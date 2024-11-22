@@ -27,15 +27,15 @@ def obtener_datos_api(api_url):
 api_url = 'https://restcountries.com/v3.1/all'
 df = obtener_datos_api(api_url)
 # Si hay datos, mostrar el DataFrame, mostrar dataframe con las columnas seleccionadas, permitir filtrado y mostrar gráficos.
+
 if df is not None:
-    #mostrar las primeras 5 filas del dataframe
-   paises = []
-  regiones = []
-  poblaciones = []
-  areas = []
-  fronteras = []
-  idiomas = []
-  zonas_horarias = []
+    paises = []
+    regiones = []
+    poblaciones = []
+    areas = []
+    fronteras = []
+    idiomas = []
+    zonas_horarias = []
 
   # Recorrer la lista de países en la respuesta
   for pais in df:
