@@ -43,5 +43,5 @@ if df is not None:
     columnas = st.multiselect('Selecciona las columnas a visualizar', df_cleaned.columns.tolist(), default=df_cleaned.columns.tolist())
     df_seleccionado = df_cleaned[columnas]
     # Mostrar el DataFrame con las columnas seleccionadas
-    st.write('Datos seleccionados:')
+    st.write('Columna Selecionada:')
     st.write(df_seleccionado)
