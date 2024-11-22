@@ -20,7 +20,6 @@ df = obtener_datos_api(api_url)
 # Si hay datos, mostrar el DataFrame, mostrar dataframe con las columna seleccionadas, permitir filtrado y mostrar gráficos.
 
 if df is not None:
-    st.write(df.head())
     # Selección de columnas relevantes
     df['Nombre'] = df['name'].apply(lambda x: x.get('common') if isinstance(x, dict) else None)
     df['Región'] = df['region']
@@ -43,16 +42,3 @@ if df is not None:
     df_filtered = df_cleaned[df_cleaned['Población'] >= min_poblacion]
     st.write(f"Datos filtrados con población mayor o igual a {min_poblacion}:")
     st.dataframe(df_filtered)
-
-    # Gráficos interactivos
-    st.write("Gráficos:")
-    x_axis = st.selectbox("Selecciona la variable para el eje X:", ['Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias'])
-    y_axis = st.selectbox("Selecciona la variable para el eje Y:", ['Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias'])
-
-    if x_axis and y_axis:
-        fig, ax = plt.subplots()
-        ax.scatter(df_filtered[x_axis], df_filtered[y_axis], alpha=0.7)
-        ax.set_xlabel(x_axis)
-        ax.set_ylabel(y_axis)
-        ax.set_title(f"Gráfico de {x_axis} vs {y_axis}")
-        st.pyplot(fig)    
