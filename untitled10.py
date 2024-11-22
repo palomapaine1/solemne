@@ -54,11 +54,8 @@ if df is not None:
     st.write("Desviación estándar:",)
     st.write(df_seleccionado.std(numeric_only=True))
     columna_ordenar = st.selectbox('Selecciona una columna para ordenar', df_seleccionado.columns)
-    columna_ordenar = st.selectbox('Selecciona una columna para ordenar', df_seleccionado.columns)
-
     # Control para seleccionar el orden (ascendente o descendente)
     orden = st.radio('Selecciona el orden:', ('Ascendente', 'Descendente'))
-    
     # Ordenar el DataFrame según la columna seleccionada y el orden elegido
     if orden == 'Ascendente':
         df_ordenado = df_seleccionado.sort_values(by=columna_ordenar, ascending=True)
@@ -69,9 +66,7 @@ if df is not None:
     st.write('DataFrame Ordenado:')
     st.write(df_ordenado)
 
-    # Calcular las estadísticas (media y mediana) solo para columnas numéricas
-    numerical_cols = df_seleccionado.select_dtypes(include=['number']).columns
-    
+
 
 
 
