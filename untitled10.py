@@ -1,54 +1,58 @@
 # -*- coding: utf-8 -*-
-import streamlit as st
-import requests
 import pandas as pd
+import requests
+import streamlit as st
 
-
-# Función para obtener los datos de la API REST Countries
-def obtener_datos_paises(api_url):
-    """Realiza la petición GET y devuelve los datos como un DataFrame."""
+def obtener_datos_api(api_url):
+    """Función que realiza la petición a la API y devuelve un DataFrame."""
     response = requests.get(api_url)
     if response.status_code == 200:
-        return pd.DataFrame(response.json())
+        data = response.json()
+        return pd.DataFrame(data)
     else:
-        st.error("Error al obtener los datos de la API")
+        st.error('Error al obtener los datos de la API')
         return None
 
-# URL de la API REST Countries
+
+# Llamar la función para obtener los datos
 api_url = "https://restcountries.com/v3.1/all"
+df = obtener_datos_api(api_url)
+# Si hay datos, mostrar el DataFrame, mostrar dataframe con las columna seleccionadas, permitir filtrado y mostrar gráficos.
 
-# Obtener los datos de la API
-df = obtener_datos_paises(api_url)
-
-# Procesar los datos si la respuesta es exitosa
 if df is not None:
-  paises = []
-  regiones = []
-  poblaciones = []
-  areas = []
-  fronteras = []
-  idiomas = []
-  zonas_horarias = []
+    st.write(df.head())
+    # Selección de columnas relevantes
+    df['Nombre'] = df['name'].apply(lambda x: x.get('common') if isinstance(x, dict) else None)
+    df['Región'] = df['region']
+    df['Población'] = df['population']
+    df['Área (km²)'] = df['area']
+    df['Fronteras'] = df['borders'].apply(lambda x: len(x) if isinstance(x, list) else 0)
+    df['Idiomas Oficiales'] = df['languages'].apply(lambda x: len(x) if isinstance(x, dict) else 0)
+    df['Zonas Horarias'] = df['timezones'].apply(lambda x: len(x) if isinstance(x, list) else 0)
 
-  # Recorrer la lista de países en la respuesta
-  for pais in df:
-    paises.append(pais.get("name", {}).get("common", "Desconocido"))
-    regiones.append(pais.get("region", "Desconocido"))
-    poblaciones.append(pais.get("population", 0))
-    areas.append(pais.get("area", 0))
-    fronteras.append(len(pais.get("borders", [])))
-    idiomas.append(len(pais.get("languages", {}).keys()))
-    zonas_horarias.append(len(pais.get("timezones", [])))
+    # Filtrar columnas seleccionadas
+    columnas = ['Nombre', 'Región', 'Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias']
+    df_cleaned = df[columnas]
 
-  df = pd.DataFrame({'País': paises,'Región': regiones,'Población': poblaciones,'Área (km²)': areas,'Número de Fronteras': fronteras,'Número de Idiomas Oficiales': idiomas,'Número de Zonas Horarias': zonas_horarias})
+    # Mostrar DataFrame con las columnas seleccionadas
+    st.write("Datos Filtrados:")
+    st.dataframe(df_cleaned)
 
-  # Mostrar los primeros 5 registros del DataFrame
-  st.write("Datos de los países:")
-  st.write(df.head())
+    # Filtrado interactivo por población mínima
+    min_poblacion = st.slider("Filtra por población mínima:", int(df_cleaned['Población'].min()), int(df_cleaned['Población'].max()), step=1000000)
+    df_filtered = df_cleaned[df_cleaned['Población'] >= min_poblacion]
+    st.write(f"Datos filtrados con población mayor o igual a {min_poblacion}:")
+    st.dataframe(df_filtered)
 
-  # Mostrar más interactividad con Streamlit (filtro por región)
-  region = st.selectbox("Selecciona una región:", df['Región'].unique())
-  df_filtrado = df[df['Región'] == region]
-  st.write(f"Países de la región {region}:")
-  st.write(df_filtrado)
+    # Gráficos interactivos
+    st.write("Gráficos:")
+    x_axis = st.selectbox("Selecciona la variable para el eje X:", ['Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias'])
+    y_axis = st.selectbox("Selecciona la variable para el eje Y:", ['Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias'])
 
+    if x_axis and y_axis:
+        fig, ax = plt.subplots()
+        ax.scatter(df_filtered[x_axis], df_filtered[y_axis], alpha=0.7)
+        ax.set_xlabel(x_axis)
+        ax.set_ylabel(y_axis)
+        ax.set_title(f"Gráfico de {x_axis} vs {y_axis}")
+        st.pyplot(fig)    
