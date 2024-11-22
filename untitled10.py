@@ -69,7 +69,19 @@ if df is not None:
     df_seleccionado = df_cleaned[columnas]
     #filtrar las filas en función de valores en una columna numérica
     columna_filtro = 'poblacion'
+    min_valor, max_valor = st.slider(
+    f"Selecciona el rango de valores para la columna '{columna_filtro}':",
+    min_value=int(df_cleaned[columna_filtro].min()), 
+    max_value=int(df_cleaned[columna_filtro].max()),
+    value=(int(df_cleaned[columna_filtro].min()), int(df_cleaned[columna_filtro].max())))
+
+    # Filtrar el DataFrame según el rango seleccionado
+    df_filtrado = df_cleaned[(df_cleaned[columna_filtro] >= min_valor) & (df_cleaned[columna_filtro] <= max_valor)]
     
+    # Mostrar el DataFrame filtrado
+    st.write(f"DataFrame Filtrado por '{columna_filtro}' en el rango {min_valor} - {max_valor}:")
+    st.write(df_filtrado)
+        
 
 
 
