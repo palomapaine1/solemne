@@ -34,6 +34,7 @@ if df is not None:
     df_cleaned = df[columnas]
 
     # Mostrar DataFrame con las columnas seleccionadas
+    st.title("Interacción con los datos")
     st.write("Mostrar los datos originales")
     st.dataframe(df_cleaned)
 
