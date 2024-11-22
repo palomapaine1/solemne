@@ -29,9 +29,7 @@ df = obtener_datos_api(api_url)
 # Si hay datos, mostrar el DataFrame, mostrar dataframe con las columnas seleccionadas, permitir filtrado y mostrar gráficos.
 if df is not None:
     #mostrar las primeras 5 filas del dataframe
-    st.write(df.head())
-    # Crear listas para almacenar los datos procesados
-    paises = []
+ paises = []
     regiones = []
     poblaciones = []
     areas = []
@@ -40,7 +38,7 @@ if df is not None:
     zonas_horarias = []
 
     # Recorrer la lista de países en la respuesta
-    for pais in data:
+    for pais in df:
         # Extraer los datos de cada país
         paises.append(pais.get("name", {}).get("common", "Desconocido"))
         regiones.append(pais.get("region", "Desconocido"))
