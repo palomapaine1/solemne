@@ -47,9 +47,8 @@ if df is not None:
     st.write(df_seleccionado)
     st.write("Estadísticas de las columnas seleccionadas:")
     st.write("Media:",)
+    st.write(df_seleccionado[numerical_cols].mean())
     st.write("Mediana:",)
     st.write("Desviación estándar:",)
-    st.header("Selecciona media, mediana, variable")
-    columnas = st.multiselect('Selecciona las columnas a visualizar', df_cleaned.columns.tolist(), default=df_cleaned.columns.tolist())
-    df_seleccionado = df_cleaned[columnas]
+   
     
