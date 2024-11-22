@@ -30,8 +30,6 @@ df = obtener_datos_api(api_url)
 if df is not None:
     #mostrar las primeras 5 filas del dataframe
     st.write(df.head())
-
-if data is not None:
     # Crear listas para almacenar los datos procesados
     paises = []
     regiones = []
