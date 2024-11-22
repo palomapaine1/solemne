@@ -68,6 +68,8 @@ if df is not None:
     columnas = st.multiselect('Selecciona las columnas a visualizar', df_cleaned.columns.tolist(), default=df_cleaned.columns.tolist())
     df_seleccionado = df_cleaned[columnas]
     #filtrar las filas en función de valores en una columna numérica
+    columna_filtro = 'population'
+    
 
 
 
