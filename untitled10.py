@@ -3,15 +3,13 @@ import streamlit as st
 import requests
 import pandas as pd
 
-import requests
-import pandas as pd
 
 # Función para obtener los datos de la API REST Countries
 def obtener_datos_paises(api_url):
     """Realiza la petición GET y devuelve los datos como un DataFrame."""
     response = requests.get(api_url)
     if response.status_code == 200:
-        return response.json()
+        return pd.DataFrame(response.json())
     else:
         st.error("Error al obtener los datos de la API")
         return None
