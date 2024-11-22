@@ -49,4 +49,4 @@ if df is not None:
     st.write("Media:",)
     st.write("Mediana:",)
     st.write("Desviación estándar:",)
-    st.dataframe(df_cleaned)
+    columnas = st.multiselect('Selecciona las columnas a visualizar', df_cleaned.columns.tolist(), default=df_cleaned.columns.tolist())
