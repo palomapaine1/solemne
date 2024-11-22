@@ -36,26 +36,24 @@ if df is not None:
     fronteras = []
     idiomas = []
     zonas_horarias = []
+    
+    for pais in df:
+        paises.append(pais.get("name", {}).get("common", "Desconocido"))
+        regiones.append(pais.get("region", "Desconocido"))
+        poblaciones.append(pais.get("population", 0))
+        areas.append(pais.get("area", 0))
+        fronteras.append(len(pais.get("borders", [])))
+        idiomas.append(len(pais.get("languages", {}).keys()))
+        zonas_horarias.append(len(pais.get("timezones", [])))
+    
+    df = pd.DataFrame({'País': paises,'Región': regiones,'Población': poblaciones,'Área (km²)': areas,'Número de Fronteras': fronteras,'Número de Idiomas Oficiales': idiomas,'Número de Zonas Horarias': zonas_horarias})
 
-  # Recorrer la lista de países en la respuesta
-  for pais in df:
-      paises.append(pais.get("name", {}).get("common", "Desconocido"))
-      regiones.append(pais.get("region", "Desconocido"))
-      poblaciones.append(pais.get("population", 0))
-      areas.append(pais.get("area", 0))
-      fronteras.append(len(pais.get("borders", [])))
-      idiomas.append(len(pais.get("languages", {}).keys()))
-      zonas_horarias.append(len(pais.get("timezones", [])))
-
-   
-df = pd.DataFrame({'País': paises,'Región': regiones,'Población': poblaciones,'Área (km²)': areas,'Número de Fronteras': fronteras,'Número de Idiomas Oficiales': idiomas,'Número de Zonas Horarias': zonas_horarias})
-
-# Mostrar los primeros 5 registros del DataFrame
-st.write("Datos de los países:")
-st.write(df.head())
-
-# Mostrar más interactividad con Streamlit (filtro por región)
-region = st.selectbox("Selecciona una región:", df['Región'].unique())
-df_filtrado = df[df['Región'] == region]
-st.write(f"Países de la región {region}:")
-st.write(df_filtrado)
+    # Mostrar los primeros 5 registros del DataFrame
+    st.write("Datos de los países:")
+    st.write(df.head())
+    
+    # Mostrar más interactividad con Streamlit (filtro por región)
+    region = st.selectbox("Selecciona una región:", df['Región'].unique())
+    df_filtrado = df[df['Región'] == region]
+    st.write(f"Países de la región {region}:")
+    st.write(df_filtrado)
