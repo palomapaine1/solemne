@@ -37,7 +37,8 @@ if df is not None:
     st.title("Interacción con los datos")
     st.header("Mostrar los datos originales")
     st.dataframe(df_cleaned)
-
+    
+    st.header("Selecciona una columna del dataframe utilizando un menú desplegable")
     # Filtrado interactivo por población mínima
     min_poblacion = st.slider("Filtra por población mínima:", int(df_cleaned['Población'].min()), int(df_cleaned['Población'].max()), step=1000000)
     df_filtered = df_cleaned[df_cleaned['Población'] >= min_poblacion]
