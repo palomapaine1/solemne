@@ -29,8 +29,9 @@ if df is not None:
     df['Idiomas Oficiales'] = df['languages'].apply(lambda x: len(x) if isinstance(x, dict) else 0)
     df['Zonas Horarias'] = df['timezones'].apply(lambda x: len(x) if isinstance(x, list) else 0)
 
-    # Dato para trabajar
+    
     columnas = ['Nombre', 'Región', 'Población', 'Área (km²)', 'Fronteras', 'Idiomas Oficiales', 'Zonas Horarias']
+    # Dataframe para trabajar
     df_cleaned = df[columnas]
 
     # Mostrar DataFrame con las columnas seleccionadas
@@ -39,8 +40,9 @@ if df is not None:
     st.dataframe(df_cleaned)
     
     st.header("Selecciona una columna del dataframe utilizando un menú desplegable")
-    # Filtrado interactivo por población mínima
-    min_poblacion = st.slider("Filtra por población mínima:", int(df_cleaned['Población'].min()), int(df_cleaned['Población'].max()), step=1000000)
-    df_filtered = df_cleaned[df_cleaned['Población'] >= min_poblacion]
-    st.write(f"Datos filtrados con población mayor o igual a {min_poblacion}:")
-    st.dataframe(df_filtered)
+    columnas = st.multiselect('Selecciona las columnas a visualizar',
+    df_filtered.columns.tolist(), default=df_filtered.columns.tolist())
+    df_seleccionado = df_filtered[columnas]
+    # Mostrar el DataFrame con las columnas seleccionadas
+    st.write('Datos seleccionados:')
+    st.write(df_seleccionado)
