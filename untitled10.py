@@ -11,49 +11,36 @@ import streamlit as st
 import requests
 import pandas as pd
 
-def obtener_datos_api(api_url):
-    """Función que realiza la petición a la API y devuelve un
-    DataFrame."""
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        data = response.json()
-        return pd.DataFrame(data)
-    else:
-        st.error('Error al obtener los datos de la API')
-        return None
+url = "https://restcountries.com/v3.1/all"
+response = requests.get(url)
 
+# Verificar si la respuesta fue exitosa
+if response.status_code == 200:
+    countries = response.json()
 
-# Llamar la función para obtener los datos
-api_url = 'https://restcountries.com/v3.1/all'
-df = obtener_datos_api(api_url)
-# Si hay datos, mostrar el DataFrame, mostrar dataframe con las columnas seleccionadas, permitir filtrado y mostrar gráficos.
+    # Recorrer la lista de países y extraer los datos
+    for country in countries:
+        common_name = country['name'].get('common', 'N/A')
+        region = country.get('region', 'N/A')
+        population = country.get('population', 'N/A')
+        area = country.get('area', 'N/A')
+        borders = country.get('borders', [])
+        languages = country.get('languages', {})
+        timezones = country.get('timezones', [])
 
-if df is not None:
-    paises = []
-    regiones = []
-    poblaciones = []
-    areas = []
-    fronteras = []
-    idiomas = []
-    zonas_horarias = []
-    
-    for pais in df:
-        paises.append(pais.get("name", {}).get("common", "Desconocido"))
-        regiones.append(pais.get("region", "Desconocido"))
-        poblaciones.append(pais.get("population", 0))
-        areas.append(pais.get("area", 0))
-        fronteras.append(len(pais.get("borders", [])))
-        idiomas.append(len(pais.get("languages", {}).keys()))
-        zonas_horarias.append(len(pais.get("timezones", [])))
-    
-    df = pd.DataFrame({'País': paises,'Región': regiones,'Población': poblaciones,'Área (km²)': areas,'Número de Fronteras': fronteras,'Número de Idiomas Oficiales': idiomas,'Número de Zonas Horarias': zonas_horarias})
+        # Extraer el número de fronteras, idiomas y zonas horarias
+        num_borders = len(borders)
+        num_languages = len(languages)
+        num_timezones = len(timezones)
 
-    # Mostrar los primeros 5 registros del DataFrame
-    st.write("Datos de los países:")
-    st.write(df.head())
-    
-    # Mostrar más interactividad con Streamlit (filtro por región)
-    region = st.selectbox("Selecciona una región:", df['Región'].unique())
-    df_filtrado = df[df['Región'] == region]
-    st.write(f"Países de la región {region}:")
-    st.write(df_filtrado)
+        # Imprimir los resultados
+        print(f"País: {common_name}")
+        print(f"Región: {region}")
+        print(f"Población: {population}")
+        print(f"Área: {area} km²")
+        print(f"Número de fronteras: {num_borders}")
+        print(f"Número de idiomas oficiales: {num_languages}")
+        print(f"Número de zonas horarias: {num_timezones}")
+        print("-" * 40)
+else:
+    print("Error al acceder a la API.")
