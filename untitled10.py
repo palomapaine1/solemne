@@ -24,7 +24,7 @@ if df is not None:
     # Selección de columnas relevantes
     df['Nombre'] = df['name'].apply(lambda x: x.get('common') if isinstance(x, dict) else None)
     df['Región'] = df['region']
-    df['Población'] = df['population']
+    df['Población'] = df['Poblacion']
     df['Área (km²)'] = df['area']
     df['Fronteras'] = df['borders'].apply(lambda x: len(x) if isinstance(x, list) else 0)
     df['Idiomas Oficiales'] = df['languages'].apply(lambda x: len(x) if isinstance(x, dict) else 0)
