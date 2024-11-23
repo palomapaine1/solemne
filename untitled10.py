@@ -115,9 +115,9 @@ if df is not None:
     if uploaded_file:
         try:
             # Detectar formato y cargar archivo
-    if uploaded_file.name.endswith('.csv'):
+     if uploaded_file.name.endswith('.csv'):
                 df = pd.read_csv(uploaded_file)
-    elif uploaded_file.name.endswith('.xlsx'):
+     elif uploaded_file.name.endswith('.xlsx'):
                 df = pd.read_excel(uploaded_file)
             st.success("Archivo cargado exitosamente.")
         except Exception as e:
