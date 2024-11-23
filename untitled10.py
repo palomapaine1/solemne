@@ -137,29 +137,7 @@ if df is not None:
         st.subheader("Datos Originales")
         st.write(df)
     
-        # Sección de gráficos interactivos
-        st.subheader("Gráficos Interactivos")
-    
-        # Selección de tipo de gráfico
-        tipo_grafico = st.selectbox("Selecciona el tipo de gráfico:", 
-                                    ["Dispersión", "Línea", "Barras", "Histograma", "Pastel"])
-    
-        # Selección de variables
-        columnas_numericas = df.select_dtypes(include=['number']).columns
-        if len(columnas_numericas) > 0:
-            columna_x = st.selectbox("Selecciona la columna para el eje X:", columnas_numericas)
-            columna_y = st.selectbox("Selecciona la columna para el eje Y:", columnas_numericas)
-    
-            # Ajuste de rango para los ejes
-            st.subheader("Ajustar Rango de los Ejes")
-            rango_x = st.slider("Rango del eje X:", 
-                                float(df[columna_x].min()), 
-                                float(df[columna_x].max()), 
-                                (float(df[columna_x].min()), float(df[columna_x].max())))
-            rango_y = st.slider("Rango del eje Y:", 
-                                float(df[columna_y].min()), 
-                                float(df[columna_y].max()), 
-                                (float(df[columna_y].min()), float(df[columna_y].max())))
+     
            
     
          
