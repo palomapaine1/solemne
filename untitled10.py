@@ -105,7 +105,7 @@ if df is not None:
             data=convertir_a_excel(df_filtrado),
             file_name='datos_filtrados.xlsx',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    # Título de la aplicación
+# Título de la aplicación
 st.title("Gráficos Interactivos con Streamlit")
 
 # Cargar archivo o usar ejemplo
