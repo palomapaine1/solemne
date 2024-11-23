@@ -161,49 +161,6 @@ else:
                             float(df[columna_y].max()), 
                             (float(df[columna_y].min()), float(df[columna_y].max())))
 
-        # Crear gráfico
-        fig, ax = plt.subplots()
-        if tipo_grafico == "Dispersión":
-            ax.scatter(df[columna_x], df[columna_y], color='blue', alpha=0.7)
-        elif tipo_grafico == "Línea":
-            ax.plot(df[columna_x], df[columna_y], color='green', marker='o')
-        elif tipo_grafico == "Barras":
-            ax.bar(df[columna_x], df[columna_y], color='orange', alpha=0.7)
-        elif tipo_grafico == "Histograma":
-            ax.hist(df[columna_x], bins=10, color='purple', alpha=0.7)
-            ax.set_ylabel("Frecuencia")
-        elif tipo_grafico == "Pastel":
-            if len(df[columna_x].unique()) <= 10:
-                ax.pie(df[columna_y], labels=df[columna_x], autopct='%1.1f%%')
-                ax.set_aspect('equal')
-            else:
-                st.warning("El gráfico de pastel requiere menos de 10 categorías únicas en el eje X.")
-                st.stop()
-
-        # Ajustar límites
-        ax.set_xlim(rango_x)
-        ax.set_ylim(rango_y)
-
-        # Etiquetas y título
-        if tipo_grafico != "Pastel":
-            ax.set_title(f"{tipo_grafico}: {columna_y} vs {columna_x}")
-            ax.set_xlabel(columna_x)
-            ax.set_ylabel(columna_y)
-
-        # Mostrar gráfico
-        st.pyplot(fig)
-
-        # Descargar gráfico en PNG
-        st.subheader("Descargar Gráfico")
-        buffer = io.BytesIO()
-        fig.savefig(buffer, format='png')
-        buffer.seek(0)
-        st.download_button(
-            label="Descargar gráfico como PNG",
-            data=buffer,
-            file_name="grafico.png",
-            mime="image/png" )
-    else:
-        st.warning("El DataFrame no contiene columnas numéricas para generar gráficos.")
+     
     
 
