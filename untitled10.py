@@ -105,38 +105,7 @@ if df is not None:
             data=convertir_a_excel(df_filtrado),
             file_name='datos_filtrados.xlsx',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    # Título de la aplicación
-    st.title("Gráficos Interactivos con Streamlit")
-    
-    # Cargar archivo o usar ejemplo
-    st.subheader("Carga de Datos")
-    uploaded_file = st.file_uploader("Sube un archivo CSV o Excel:", type=["csv", "xlsx"])
-    
-    if uploaded_file:
-        try:
-            # Detectar formato y cargar archivo
-     if uploaded_file.name.endswith('.csv'):
-                df = pd.read_csv(uploaded_file)
-     elif uploaded_file.name.endswith('.xlsx'):
-                df = pd.read_excel(uploaded_file)
-            st.success("Archivo cargado exitosamente.")
-        except Exception as e:
-            st.error(f"Error al cargar el archivo: {e}")
-            df = pd.DataFrame()
-    else:
-        # Crear un DataFrame de ejemplo si no se sube archivo
-        st.info("Usando datos de ejemplo porque no se subió archivo.")
-        data = {'Categoría': ['A', 'B', 'C', 'D', 'E'],'Valor 1': [10, 20, 30, 40, 50],'Valor 2': [15, 25, 35, 45, 55],'Valor 3': [5, 15, 25, 35, 45],}
-        df = pd.DataFrame(data)
-    
-    # Verificar si el DataFrame tiene datos
-    if df.empty:
-        st.error("No hay datos disponibles. Sube un archivo para continuar.")
-    else:
-        # Mostrar los datos originales
-        st.subheader("Datos Originales")
-        st.write(df)
-    
+   
      
            
     
