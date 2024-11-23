@@ -105,6 +105,78 @@ if df is not None:
             data=convertir_a_excel(df_filtrado),
             file_name='datos_filtrados.xlsx',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    # Título de la aplicación
+st.title("Gráficos Interactivos con Streamlit")
+
+# Cargar datos
+st.sidebar.header("Subir un archivo CSV")
+uploaded_file = st.sidebar.file_uploader("Selecciona un archivo CSV", type=["csv"])
+
+if uploaded_file:
+    # Leer archivo CSV
+    df = pd.read_csv(uploaded_file)
+
+    # Mostrar una vista previa de los datos
+    st.subheader("Vista previa de los datos")
+    st.dataframe(df)
+
+    # Filtrar columnas numéricas
+    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+
+    if numeric_columns:
+        # Selección de variables
+        st.sidebar.subheader("Selecciona las variables para los gráficos")
+        x_axis = st.sidebar.selectbox("Eje X", numeric_columns)
+        y_axis = st.sidebar.selectbox("Eje Y", numeric_columns)
+
+        # Selección del tipo de gráfico
+        st.sidebar.subheader("Selecciona el tipo de gráfico")
+        chart_type = st.sidebar.radio(
+            "Tipo de gráfico",
+            ["Línea", "Barras", "Dispersión", "Pastel (solo para X)"]
+        )
+
+        # Renderizado de gráficos
+        st.subheader("Gráfico generado")
+
+        if chart_type == "Línea":
+            chart = alt.Chart(df).mark_line().encode(
+                x=x_axis,
+                y=y_axis,
+                tooltip=[x_axis, y_axis]
+            ).interactive()
+            st.altair_chart(chart, use_container_width=True)
+
+        elif chart_type == "Barras":
+            chart = alt.Chart(df).mark_bar().encode(
+                x=x_axis,
+                y=y_axis,
+                tooltip=[x_axis, y_axis]
+            ).interactive()
+            st.altair_chart(chart, use_container_width=True)
+
+        elif chart_type == "Dispersión":
+            chart = alt.Chart(df).mark_circle(size=60).encode(
+                x=x_axis,
+                y=y_axis,
+                tooltip=[x_axis, y_axis]
+            ).interactive()
+            st.altair_chart(chart, use_container_width=True)
+
+        elif chart_type == "Pastel (solo para X)":
+            pie_data = df[x_axis].value_counts().reset_index()
+            pie_data.columns = [x_axis, "count"]
+            chart = alt.Chart(pie_data).mark_arc().encode(
+                theta=alt.Theta(field="count", type="quantitative"),
+                color=alt.Color(field=x_axis, type="nominal"),
+                tooltip=[x_axis, "count"]
+            )
+            st.altair_chart(chart, use_container_width=True)
+
+    else:
+        st.warning("No se encontraron columnas numéricas en el archivo.")
+else:
+    st.info("Por favor, sube un archivo CSV para comenzar.")
    
      
            
