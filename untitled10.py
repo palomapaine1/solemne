@@ -115,9 +115,9 @@ if df is not None:
     if uploaded_file:
         try:
             # Detectar formato y cargar archivo
-            if uploaded_file.name.endswith('.csv'):
+    if uploaded_file.name.endswith('.csv'):
                 df = pd.read_csv(uploaded_file)
-            elif uploaded_file.name.endswith('.xlsx'):
+    elif uploaded_file.name.endswith('.xlsx'):
                 df = pd.read_excel(uploaded_file)
             st.success("Archivo cargado exitosamente.")
         except Exception as e:
@@ -162,17 +162,17 @@ if df is not None:
                                 (float(df[columna_y].min()), float(df[columna_y].max())))
             # Crear gráfico
             fig, ax = plt.subplots()
-            if tipo_grafico == "Dispersión":
+        if tipo_grafico == "Dispersión":
                 ax.scatter(df[columna_x], df[columna_y], color='blue', alpha=0.7)
-            elif tipo_grafico == "Línea":
+        elif tipo_grafico == "Línea":
                 ax.plot(df[columna_x], df[columna_y], color='green', marker='o')
-            elif tipo_grafico == "Barras":
+        elif tipo_grafico == "Barras":
                 ax.bar(df[columna_x], df[columna_y], color='orange', alpha=0.7)
-            elif tipo_grafico == "Histograma":
+        elif tipo_grafico == "Histograma":
                 ax.hist(df[columna_x], bins=10, color='purple', alpha=0.7)
                 ax.set_ylabel("Frecuencia")
-            elif tipo_grafico == "Pastel":
-                if len(df[columna_x].unique()) <= 10:
+        elif tipo_grafico == "Pastel":
+            if len(df[columna_x].unique()) <= 10:
                     ax.pie(df[columna_y], labels=df[columna_x], autopct='%1.1f%%')
                     ax.set_aspect('equal')
                 else:
