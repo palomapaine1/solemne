@@ -105,23 +105,7 @@ if df is not None:
             data=convertir_a_excel(df_filtrado),
             file_name='datos_filtrados.xlsx',
             mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        # Sección 4: Selección de Variables y Generación de Gráficos
-    st.subheader("Gráficos Interactivos")
-    
-    # Selección de variables para ejes X e Y
-    columna_x = st.selectbox("Selecciona la columna para el eje X:", df.select_dtypes(include=['number']).columns)
-    columna_y = st.selectbox("Selecciona la columna para el eje Y:", df.select_dtypes(include=['number']).columns)
-    
-    if columna_x and columna_y:
-        # Crear gráfico
-        fig, ax = plt.subplots()
-        ax.scatter(df[columna_x], df[columna_y], color='blue', alpha=0.7)
-        ax.set_title(f"{columna_y} vs {columna_x}")
-        ax.set_xlabel(columna_x)
-        ax.set_ylabel(columna_y)
-        
-        # Mostrar gráfico
-        st.pyplot(fig)
+       
         
 
 
