@@ -119,64 +119,51 @@ if uploaded_file:
     # Mostrar una vista previa de los datos
     st.subheader("Vista previa de los datos")
     st.dataframe(df)
+# Cargar los datos (reemplaza con tu fuente de datos)
+df = pd.read_csv("datos.csv")
 
-    # Filtrar columnas numéricas
-    numeric_columns = df.select_dtypes(include=['float64', 'int64']).columns.tolist()
+# Título de la aplicación
+st.title("Explorador de Datos Interactivo")
 
-    if numeric_columns:
-        # Selección de variables
-        st.sidebar.subheader("Selecciona las variables para los gráficos")
-        x_axis = st.sidebar.selectbox("Eje X", numeric_columns)
-        y_axis = st.sidebar.selectbox("Eje Y", numeric_columns)
+# Selección de las columnas numéricas
+columnas_numericas = df.select_dtypes(include=['number']).columns
+x_axis = st.selectbox("Selecciona el eje X", columnas_numericas)
+y_axis = st.selectbox("Selecciona el eje Y", columnas_numericas)
 
-        # Selección del tipo de gráfico
-        st.sidebar.subheader("Selecciona el tipo de gráfico")
-        chart_type = st.sidebar.radio(
-            "Tipo de gráfico",
-            ["Línea", "Barras", "Dispersión", "Pastel (solo para X)"]
-        )
+# Rango personalizado para los ejes
+min_x = st.number_input("Mínimo para el eje X", value=df[x_axis].min())
+max_x = st.number_input("Máximo para el eje X", value=df[x_axis].max())
+min_y = st.number_input("Mínimo para el eje Y", value=df[y_axis].min())
+max_y = st.number_input("Máximo para el eje Y", value=df[y_axis].max())
 
-        # Renderizado de gráficos
-        st.subheader("Gráfico generado")
+# Selección del tipo de gráfico
+tipo_grafico = st.selectbox("Selecciona el tipo de gráfico", ["Dispersión", "Línea", "Barra", "Histograma", "Pastel"])
 
-        if chart_type == "Línea":
-            chart = alt.Chart(df).mark_line().encode(
-                x=x_axis,
-                y=y_axis,
-                tooltip=[x_axis, y_axis]
-            ).interactive()
-            st.altair_chart(chart, use_container_width=True)
-
-        elif chart_type == "Barras":
-            chart = alt.Chart(df).mark_bar().encode(
-                x=x_axis,
-                y=y_axis,
-                tooltip=[x_axis, y_axis]
-            ).interactive()
-            st.altair_chart(chart, use_container_width=True)
-
-        elif chart_type == "Dispersión":
-            chart = alt.Chart(df).mark_circle(size=60).encode(
-                x=x_axis,
-                y=y_axis,
-                tooltip=[x_axis, y_axis]
-            ).interactive()
-            st.altair_chart(chart, use_container_width=True)
-
-        elif chart_type == "Pastel (solo para X)":
-            pie_data = df[x_axis].value_counts().reset_index()
-            pie_data.columns = [x_axis, "count"]
-            chart = alt.Chart(pie_data).mark_arc().encode(
-                theta=alt.Theta(field="count", type="quantitative"),
-                color=alt.Color(field=x_axis, type="nominal"),
-                tooltip=[x_axis, "count"]
-            )
-            st.altair_chart(chart, use_container_width=True)
-
+# Función para generar el gráfico
+def generar_grafico(x, y, tipo, min_x, max_x, min_y, max_y):
+    if tipo == "Dispersión":
+        fig = px.scatter(df, x=x, y=y)
+    elif tipo == "Línea":
+        fig = px.line(df, x=x, y=y)
+    elif tipo == "Barra":
+        fig = px.bar(df, x=x, y=y)
+    elif tipo == "Histograma":
+        fig = px.histogram(df, x=x)
     else:
-        st.warning("No se encontraron columnas numéricas en el archivo.")
-else:
-    st.info("Por favor, sube un archivo CSV para comenzar.")
+        fig = px.pie(df, values=y, names=x)
+
+    fig.update_xaxes(range=[min_x, max_x])
+    fig.update_yaxes(range=[min_y, max_y])
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Descargar el gráfico
+    if st.button("Descargar Gráfico"):
+        fig.write_image("grafico.png")
+        with open("grafico.png", "rb") as file:
+            st.download_button("Descargar", file, file_name="grafico.png")
+
+# Generar el gráfico
+generar_grafico(x_axis, y_axis, tipo_grafico, min_x, max_x, min_y, max_y)
    
      
            
