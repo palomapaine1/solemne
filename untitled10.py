@@ -151,19 +151,6 @@ def generar_grafico(x, y, tipo, min_x, max_x, min_y, max_y):
         fig = px.histogram(df, x=x)
     else:
         fig = px.pie(df, values=y, names=x)
-
-    fig.update_xaxes(range=[min_x, max_x])
-    fig.update_yaxes(range=[min_y, max_y])
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Descargar el gráfico
-    if st.button("Descargar Gráfico"):
-        fig.write_image("grafico.png")
-        with open("grafico.png", "rb") as file:
-            st.download_button("Descargar", file, file_name="grafico.png")
-
-# Generar el gráfico
-generar_grafico(x_axis, y_axis, tipo_grafico, min_x, max_x, min_y, max_y)
    
      
            
