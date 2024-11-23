@@ -162,7 +162,7 @@ else:
                             (float(df[columna_y].min()), float(df[columna_y].max())))
 
         # Crear gráfico
-         fig, ax = plt.subplots()
+        fig, ax = plt.subplots()
         if tipo_grafico == "Dispersión":
             ax.scatter(df[columna_x], df[columna_y], color='blue', alpha=0.7)
         elif tipo_grafico == "Línea":
