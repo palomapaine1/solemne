@@ -119,38 +119,7 @@ if uploaded_file:
     # Mostrar una vista previa de los datos
     st.subheader("Vista previa de los datos")
     st.dataframe(df)
-# Cargar los datos (reemplaza con tu fuente de datos)
-df = pd.read_csv("datos.csv")
 
-# Título de la aplicación
-st.title("Explorador de Datos Interactivo")
-
-# Selección de las columnas numéricas
-columnas_numericas = df.select_dtypes(include=['number']).columns
-x_axis = st.selectbox("Selecciona el eje X", columnas_numericas)
-y_axis = st.selectbox("Selecciona el eje Y", columnas_numericas)
-
-# Rango personalizado para los ejes
-min_x = st.number_input("Mínimo para el eje X", value=df[x_axis].min())
-max_x = st.number_input("Máximo para el eje X", value=df[x_axis].max())
-min_y = st.number_input("Mínimo para el eje Y", value=df[y_axis].min())
-max_y = st.number_input("Máximo para el eje Y", value=df[y_axis].max())
-
-# Selección del tipo de gráfico
-tipo_grafico = st.selectbox("Selecciona el tipo de gráfico", ["Dispersión", "Línea", "Barra", "Histograma", "Pastel"])
-
-# Función para generar el gráfico
-def generar_grafico(x, y, tipo, min_x, max_x, min_y, max_y):
-    if tipo == "Dispersión":
-        fig = px.scatter(df, x=x, y=y)
-    elif tipo == "Línea":
-        fig = px.line(df, x=x, y=y)
-    elif tipo == "Barra":
-        fig = px.bar(df, x=x, y=y)
-    elif tipo == "Histograma":
-        fig = px.histogram(df, x=x)
-    else:
-        fig = px.pie(df, values=y, names=x)
    
      
            
