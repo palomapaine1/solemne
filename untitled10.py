@@ -64,7 +64,47 @@ if df is not None:
     # Mostrar el DataFrame ordenado
     st.write('DataFrame Ordenado:')
     st.write(df_ordenado)
+    st.subheader("Filtrar Datos")
+    columna_filtro = st.selectbox("Selecciona una columna para filtrar:", df.select_dtypes(include=['number']).columns)
+    if columna_filtro:
+    min_val, max_val = st.slider(
+        f"Selecciona el rango para {columna_filtro}:",
+        float(df[columna_filtro].min()),
+        float(df[columna_filtro].max()),
+        (float(df[columna_filtro].min()), float(df[columna_filtro].max())))
+    df_filtrado = df[(df[columna_filtro] >= min_val) & (df[columna_filtro] <= max_val)]
+    st.write("**Datos Filtrados:**")
+    st.write(df_filtrado)
 
+    # Botón para descargar los datos filtrados
+    st.subheader("Exportar Datos Filtrados")
+    formato = st.radio("Elige el formato para descargar:", ('CSV', 'Excel'))
+
+    @st.cache_data
+    def convertir_a_csv(df):
+        return df.to_csv(index=False).encode('utf-8')
+
+    @st.cache_data
+    def convertir_a_excel(df):
+        import io
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+            df.to_excel(writer, index=False, sheet_name='DatosFiltrados')
+            writer.save()
+        return buffer.getvalue()
+
+    if formato == 'CSV':
+        st.download_button(
+            label="Descargar en CSV",
+            data=convertir_a_csv(df_filtrado),
+            file_name='datos_filtrados.csv',
+            mime='text/csv')
+    else:
+        st.download_button(
+            label="Descargar en Excel",
+            data=convertir_a_excel(df_filtrado),
+            file_name='datos_filtrados.xlsx',
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         
 
 
