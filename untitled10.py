@@ -67,7 +67,7 @@ if df is not None:
     st.subheader("Filtrar Datos")
     columna_filtro = st.selectbox("Selecciona una columna para filtrar:", df.select_dtypes(include=['number']).columns)
     if columna_filtro:
-    min_val, max_val = st.slider(
+     min_val, max_val = st.slider(
         f"Selecciona el rango para {columna_filtro}:",
         float(df[columna_filtro].min()),
         float(df[columna_filtro].max()),
