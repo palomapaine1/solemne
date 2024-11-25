@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-import pandas as pd
-import requests
-import streamlit as st
-
 
 import pandas as pd
 import requests
