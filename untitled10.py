@@ -8,6 +8,8 @@ import io
 #titulo de la aplicacion
 st.title('Visualización Interactiva de Datos en Tiempo Real con Streamlit y API REST')
 st.header('Descripción del Proyecto')
+st.write('
+Esta API proporciona un conjunto de datos detallado con información estructurada en formato JSON. Algunos de los datos clave que se pueden extraer incluyen: nombre del País, Región Geográfica, Población Total, Área en Kilómetros Cuadrados, Número de Fronteras, idiomas Oficiales Zonas Horarias Esta información es esencial para desarrollar análisis detallados y generar visualizaciones interactivas que ayuden a entender patrones geográficos, demográficos y culturales.')
 def obtener_datos_paises():
     url = 'https://raw.githubusercontent.com/jxnscv/Programacion/main/all.json'
     respuesta = requests.get(url)
