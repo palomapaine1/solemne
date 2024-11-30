@@ -6,8 +6,7 @@ import streamlit as st
 import io
 
 #titulo de la aplicacion
-st.title('Visualización Interactiva de Datos en 
-Tiempo Real con Streamlit y API REST')
+st.title('Visualización Interactiva de Datos en Tiempo Real con Streamlit y API REST')
 def obtener_datos_paises():
     url = 'https://raw.githubusercontent.com/jxnscv/Programacion/main/all.json'
     respuesta = requests.get(url)
